@@ -1,0 +1,17 @@
+@forward '../styles/variables';
+@forward "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+body {
+    width: auto;
+    height: auto;
+}
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+
+input {
+    -webkit-border-radius: 5px 5px 5px 5px;
+    border-radius: 5px 5px 5px 5px;
+    height: 50px;
+}
+

@@ -1,0 +1,44 @@
+@use "bootstrap/scss/bootstrap";
+
+section {
+  min-width: fit-content;
+  position: relative;
+  margin: 10% auto 10% auto;
+  width: 90%;
+  max-width: 400px;
+
+  div {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    padding: 21px;
+
+    &.box {
+      -webkit-box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+      box-shadow: 0 30px 60px 0 rgba(0, 0, 0, 0.3);
+    }
+
+    h2 {
+      margin: auto;
+    }
+
+    div {
+      &.loginButton {
+        align-self: flex-end;
+      }
+    }
+  }
+}
+
+.ng-valid[required],
+.ng-valid.required {
+  border: 5px solid #42a948; /* green */
+}
+
+.ng-valid-pattern {
+  color: red;
+}
+
+.ng-dirty.ng-invalid {
+  border: 5px solid #a94442; /* red */
+}

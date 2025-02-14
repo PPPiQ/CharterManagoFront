@@ -1,0 +1,53 @@
+<form [formGroup]="loginForm" class="loginForm">
+  <section>
+    <div class="border border-primar">
+      <H2>Sign in</H2>
+      <div class="loginField">
+        <label for="login" class="form-label"></label>
+        <input
+          formControlName="login"
+          type="email"
+          name=""
+          id="login"
+          class="form-control"
+          placeholder="name@example.com"
+        />
+      </div>
+      <div class="passwordField">
+        <label for="pass" class="form-label"></label>
+        <input
+          formControlName="password"
+          type="password"
+          id="pass"
+          class="form-control"
+        />
+      </div>
+
+      <div class="loginButton">
+        <button
+          type="submit"
+          value="Submit"
+          id="loginButton"
+          (click)="login()"
+          class="btn btn-primary btn-lg"
+          [disabled]="loginForm?.invalid"
+        >
+          Login
+        </button>
+      </div>
+      @if (loginFieldValue?.invalid && (loginFieldValue?.dirty &&
+      loginFieldValue?.touched)) {
+      <div class="cross-validation-error-message alert alert-danger">
+        <span> Please verify form values </span>
+        @if(loginFieldValue?.hasError('required')) {
+        <span>Login is required</span>
+        } @if(loginFieldValue?.hasError('minlength')) {
+        <span>Login has to be at least 4 charactes.</span>
+        } @if(loginFieldValue?.hasError('pattern')) {
+        <span>Login pattern is incorrect.</span>
+        }
+      </div>
+      }
+    </div>
+  </section>
+</form>

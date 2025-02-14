@@ -1,0 +1,29 @@
+:root {
+    --primary-100: #f5e0c0;
+    --shadow: grey;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  
+  }
+  
+  .watercraft-list {
+    width: 90vw;
+    max-width: 1170px;
+    display: grid;
+    margin: auto;
+    gap: 2rem;
+    grid-column: auto;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .watercraft-list {
+        grid-column: auto;
+      grid-template-columns: repeat(3, 1fr);;
+      padding: 1em;
+    }
+  }
+  

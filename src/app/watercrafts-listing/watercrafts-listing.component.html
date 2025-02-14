@@ -1,0 +1,22 @@
+<article class="watercraft-card">
+  <span class="number">#{{ getNumber() }}</span>
+  <div>
+    <h2 class="watercraft-card-header">{{ watercraft.name }}</h2>
+  </div>
+  <div>
+    <img [src]="watercraft.image" [alt]="alt" />
+  </div>
+  <div>
+    Opis:
+    <h2>
+      <p>{{ watercraft?.description }}</p>
+    </h2>
+  </div>
+  Clicks: {{ getCount()() }}
+  <div>
+    <button [id]="watercraft.id" class="btn" type="button" (click)="increment()">
+      Details
+    </button>
+  </div>
+  <ng-content></ng-content>
+</article>

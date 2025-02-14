@@ -1,0 +1,14 @@
+
+<button (click)="getUser()">Get users</button>
+<button (click)="refresh()">Refresh</button>
+<div>
+  @if (isAuth()) {
+  <span (click)="logout()">
+    <fa-icon [icon]="['fas', 'right-from-bracket']" >Log out</fa-icon> Log Out 
+  </span>
+  } @else {
+  <span class="user-profile-image" (click)="login()">
+    <fa-icon [icon]="['fas', 'right-to-bracket']" >Log in</fa-icon> Log In
+  </span>
+  }
+</div>

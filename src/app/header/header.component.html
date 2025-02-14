@@ -1,0 +1,24 @@
+<header class="header">
+  <div class="header-content">
+    <h1>{{title}}</h1>
+    <nav class="top-menu" id="nav">
+      <ul class="nav-links">
+        @for(item of navLinks; track item.id; let idx = $index) {
+        <li id="{{ item.id }}" class="nav-item">
+          <a  [routerLink]="item.href" class="nav-link">
+            @if (item?.icon.length > 0) {
+            <fa-icon [icon]="item?.icon"></fa-icon>
+            } @else {
+            {{ item.text }}
+            }
+          </a>
+        </li>
+        }
+      </ul>
+    </nav>
+    <div class='tools-links'>
+      <app-user-profile></app-user-profile>
+      <img src="assets/icons/shopping_cart.svg" alt="Shopping cart" (click)="openCart()">
+    </div>
+  </div>
+</header>

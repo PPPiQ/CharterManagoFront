@@ -1,0 +1,58 @@
+:root {
+    --primary-100: #f5e0c0;
+    --shadow: grey;
+  }
+  
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  
+  }
+  
+  .watercraft-card {
+    position: relative;
+    border: 1px solid black;
+    display: flex;
+    justify-content: flex-start;
+    flex-direction: column;
+    font-size: small;
+    border-radius: 1rem;
+    padding: 0.5rem;
+    box-shadow: 10px 5px 5px var(--shadow);
+  }
+  
+  .watercraft-card div button {
+    font-size: medium;
+    border-radius: 0.2rem;
+    width: 100%;
+    padding: 5px;
+    margin: 5px auto;
+    border: 1px solid grey;
+  }
+  
+  img {
+    width: 100%;
+    object-fit: cover;
+  }
+  
+  .watercraft-card-header {
+    text-align: center;
+  }
+  
+  .number {
+    background-color: blue;
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    padding: 0.25rem;
+    border-top-left-radius: 1rem;
+    border-bottom-right-radius: 1rem;
+    text-align: center;
+    color: white
+  }
+  
+  html {
+    scroll-behavior: smooth;
+  }
+  
