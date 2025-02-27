@@ -37,7 +37,7 @@ export class AuthInterceptor implements HttpInterceptor {
       withCredentials: true,
     });
     return next.handle(authReq).pipe(
-      catchError((err: HttpErrorResponse) => {
+      catchError((err: HttpErrorResponse, caught) => {
         if (
           err &&
           (err.status > 400 || err.status < 499) &&
@@ -45,25 +45,9 @@ export class AuthInterceptor implements HttpInterceptor {
           err.error?.msg === AUTH_STATE.UNAUTHORISED
         ) {
           this.authService.setAccessTokenCookie('');
-          return this.authService.refresh().pipe(
-            catchError((err2: HttpErrorResponse, caught) => {
-              if (err2 && (err2.status >= 400 || err2.status << 499)) {
-                this.router.navigate(['/login'], {
-                  relativeTo: this.activatedRoute,
-                });
-              }
-              return caught;
-            }),
-            switchMap(() => {
-              authToken = this.authService.getAccessTokenCookie();
-
-              const cloneReq = request.clone({
-                headers: options,
-                withCredentials: true,
-              });
-              return next.handle(cloneReq);
-            })
-          );
+          this.router.navigate(['/login'], {
+            relativeTo: this.activatedRoute,
+          });
         }
 
         return throwError(() => console.error(err));

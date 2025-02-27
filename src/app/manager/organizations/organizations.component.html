@@ -5,21 +5,29 @@
       Add organization
     </button>
   </div>
-  @if( organizations().length > 0 ) { @for(organization of organizations(); track
-  organization.id) {
-  <div>Name: {{ organization.name }}</div>
-  } } @else {
-  <div>No organizations to display.</div>
-  }
+  <div class="organizations-section-content">
+    @if( organizations().length > 0 ) { @for(organization of organizations();
+    track organization.id) {
+    <div class="container">
+      <div class="col-item">Name: {{ organization.name }}</div>
+      <div class="col-item">
+        <fa-icon
+          [icon]="faTrashCan"
+          title="delete"
+          (click)="deleteOrganization(organization.id)"
+        ></fa-icon>
+      </div>
+    </div>
+    } } @else {
+    <div>No organizations to display.</div>
+    }
+  </div>
 </section>
 
 <dialog class="dialog" appDialog #dialog title="Add organization">
   <form [formGroup]="form">
     <ng-template appDialogContent>
-      <app-add-organization
-        formControlName="organizationName"
-        [disabled]="true"
-      >
+      <app-add-organization formControlName="organizationName">
       </app-add-organization>
     </ng-template>
     <ng-template appDialogFooter>

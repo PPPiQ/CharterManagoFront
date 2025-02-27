@@ -11,6 +11,7 @@ import {
   faRightFromBracket,
   faRightToBracket,
   faCircleUser,
+  
 } from '@fortawesome/free-solid-svg-icons';
 import { RouterOutlet } from '@angular/router';
 import { ManagerModule } from './manager/manager.module';
@@ -33,6 +34,7 @@ export class AppComponent {
   faRightFromBracket: IconDefinition = faRightFromBracket;
   faRightToBracket: IconDefinition = faRightToBracket;
   faCircleUser: IconDefinition = faCircleUser;
+
 
   constructor(library: FaIconLibrary) {
     library.addIcons(

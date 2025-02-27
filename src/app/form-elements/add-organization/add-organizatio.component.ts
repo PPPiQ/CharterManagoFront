@@ -16,20 +16,14 @@ import {
     {
       provide: NG_VALUE_ACCESSOR,
       useExisting: forwardRef(() => AddOrganizatioComponent),
-      multi: true
-    }
-  ]
+      multi: true,
+    },
+  ],
 })
 export class AddOrganizatioComponent implements ControlValueAccessor {
   private _name: string = '';
   disable: boolean | undefined = false;
-  onChange = (event: Event) => {
-    console.log("EVENT");
-    
-    console.log(event.target)
-    console.log('EVENT END');
-    
-  };
+  onChange = (event: Event) => {};
   onTaughed = () => {};
 
   get name(): string {

@@ -6,7 +6,16 @@ export interface OrganizationsI {
     __v?: number;
   }
 
-export interface OperationsResponse {
+export interface OrganizationsListingResponse {
     data: OrganizationsI[],
     success: boolean
+}
+
+export interface OrganizationCreateResponse {
+  data: OrganizationsI,
+  success: boolean
+}
+
+export interface ResponseOnDelete {
+  success: boolean,
 }

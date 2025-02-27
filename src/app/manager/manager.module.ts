@@ -10,6 +10,8 @@ import { DialogContentDirective } from '../Dialogs/dialog-content.directive';
 import { DataService } from './data.service';
 import { AddOrganizatioComponent } from '../form-elements/add-organization/add-organizatio.component';
 
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+
 @NgModule({
   declarations: [OrganizationsComponent],
   imports: [
@@ -20,7 +22,8 @@ import { AddOrganizatioComponent } from '../form-elements/add-organization/add-o
     DialogFooterDirective,
     DialogHeaderDirective,
     DialogContentDirective,
-    AddOrganizatioComponent
+    AddOrganizatioComponent,
+    FontAwesomeModule
   ],
   providers: [DataService],
 })

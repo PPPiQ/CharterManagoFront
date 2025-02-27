@@ -1,9 +1,22 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { effect, EffectRef, Injectable, OnDestroy, signal, Signal, WritableSignal } from '@angular/core';
+import {
+  effect,
+  EffectRef,
+  Injectable,
+  OnDestroy,
+  signal,
+  Signal,
+  WritableSignal,
+} from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { OperationsResponse, OrganizationsI } from './models/organizations';
+import {
+  OrganizationsListingResponse,
+  OrganizationsI,
+  ResponseOnDelete,
+  OrganizationCreateResponse,
+} from './models/organizations';
 import { ManagerModule } from './manager.module';
-import { Observable, tap } from 'rxjs';
+import { EMPTY, map, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: ManagerModule,
@@ -13,6 +26,10 @@ export class DataService implements OnDestroy {
   public $organizations: Signal<OrganizationsI[]> =
     this.organizations.asReadonly();
   private organizationEffect: EffectRef;
+  private headers = new HttpHeaders({
+    'Content-Type': 'application/json',
+  });
+  private options = { headers: this.headers };
 
   constructor(
     private http: HttpClient,
@@ -21,51 +38,44 @@ export class DataService implements OnDestroy {
   ) {
     this.organizationEffect = effect(() => {
       console.log(`The organization was updated on effect`);
-      console.log(this.organizations());
-      
     });
   }
   ngOnDestroy(): void {
     this.organizationEffect.destroy();
   }
 
-  saveOrganization(orgname: string | null) {
+  saveOrganization(orgname: string | null): Observable<any> {
     console.log('Sending organization');
 
     if (!orgname) {
-      return;
+      return EMPTY;
     }
-    const headers = new HttpHeaders({
-      'content-type': 'application/json',
-    });
-    const body = {
-      name: orgname,
-    };
+
     return this.http
-      .post('http://127.0.0.1:5000/api/v1/add-organization', body, {
-        headers,
-      })
-      .subscribe({
-        next: (result) => {
-          console.log(result);
-        },
-        error: (err) => {
-          console.error(err);
-        },
-      });
+      .post(
+        'http://127.0.0.1:5000/api/v1/add-organization',
+        { name: orgname },
+        this.options
+      )
+      .pipe(
+        map((result) => {
+          const orgResp: OrganizationCreateResponse =
+            result as OrganizationCreateResponse;
+          const orgObj: OrganizationsI = orgResp.data;
+          if (orgResp?.success) {
+            this.organizations.update((value: OrganizationsI[]) => value.concat(orgObj) );
+          }
+        })
+      );
   }
 
   getOrganizations(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
     return this.http
-      .get('http://127.0.0.1:5000/api/v1/organizations', {
-        headers,
-      })
+      .get('http://127.0.0.1:5000/api/v1/organizations', this.options)
       .pipe(
         tap((result) => {
-          const orgData: OperationsResponse = result as OperationsResponse;
+          const orgData: OrganizationsListingResponse =
+            result as OrganizationsListingResponse;
           if (orgData && orgData.success) {
             this.setOrganizations(orgData?.data);
           } else {
@@ -73,6 +83,24 @@ export class DataService implements OnDestroy {
               'Response from organizations did not contained any data. '
             );
           }
+        })
+      );
+  }
+
+  deleteOrganization(id: string) {
+    console.log(`Deleting organization ${id}`);
+    return this.http
+      .delete(`http://127.0.0.1:5000/api/v1/delete/${id}`, this.options)
+      .pipe(
+        map((value) => {
+          const deleteResponseObject: ResponseOnDelete =
+            value as ResponseOnDelete;
+          if (deleteResponseObject.success) {
+            this.organizations.update((values) =>
+              values.filter((value) => value.id !== id)
+            );
+          }
+          console.log('Deleted');
         })
       );
   }
