@@ -1,19 +1,39 @@
-import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
-import { effect, EffectRef, Injectable, OnDestroy, Signal, signal, WritableSignal } from '@angular/core';
-import { AuthSessionData, UserCredentials } from '../models/Auth';
-import { BehaviorSubject, map, Observable, tap } from 'rxjs';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
+import {
+  effect,
+  EffectRef,
+  Injectable,
+  OnDestroy,
+  Signal,
+  signal,
+  WritableSignal,
+} from '@angular/core';
+import {
+  AccountData,
+  AuthSessionData,
+  UserAccount,
+  UserCredentials,
+} from '../models/auth';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
 })
-export class AuthService implements  OnDestroy {
+export class AuthService implements OnDestroy {
   private isAuthenticated: WritableSignal<boolean> = signal(false);
   private TOKEN_KEY: string | null = null;
   private _destiantionUrl: string | null = null;
   private authEffect: EffectRef;
-  public $isAuthorized: Signal<boolean> = this.getAuthState();
+  public $isAuthorized: Signal<boolean> = this.isAuthenticated.asReadonly();
 
   constructor(private http: HttpClient) {
+    const token = sessionStorage.getItem('accessToken');
+    if (token) {
+      this.TOKEN_KEY = token;
+      this.isAuthenticated.set(true);
+    } else {
+      this.TOKEN_KEY = null;
+    }
     this.authEffect = effect(() => {
       console.log(`The isAuthenticated is: ${this.isAuthenticated()}`);
     });
@@ -140,7 +160,11 @@ export class AuthService implements  OnDestroy {
     this.TOKEN_KEY = null;
   }
 
-  public getAuthState(): Signal<boolean> {
-    return this.isAuthenticated.asReadonly();
+  public setAccessTokenCookie(value: string) {
+    sessionStorage.setItem('accessToken', value)
+  }
+
+  public getAccessTokenCookie() {
+    return sessionStorage.getItem('accessToken');
   }
 }

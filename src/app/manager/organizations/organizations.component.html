@@ -1,0 +1,31 @@
+<section>
+  <div class="organizations-header">
+    <span class="organizations-section-title">My organizations</span>
+    <button class="btn btn-primary float-end" (click)="dialog.showModal()">
+      Add organization
+    </button>
+  </div>
+  @if( organizations().length > 0 ) { @for(organization of organizations(); track
+  organization.id) {
+  <div>Name: {{ organization.name }}</div>
+  } } @else {
+  <div>No organizations to display.</div>
+  }
+</section>
+
+<dialog class="dialog" appDialog #dialog title="Add organization">
+  <form [formGroup]="form">
+    <ng-template appDialogContent>
+      <app-add-organization
+        formControlName="organizationName"
+        [disabled]="true"
+      >
+      </app-add-organization>
+    </ng-template>
+    <ng-template appDialogFooter>
+      <button class="btn btn-secondary" (click)="saveOrganization()">
+        Save
+      </button>
+    </ng-template>
+  </form>
+</dialog>

@@ -1,5 +1,9 @@
 <section id="offer" class="watercraft-list">
-    @for (watercraft of watercrafts; track watercraft.id; let idx = $index) {
-        <app-watercrafts-listing id={watercraft.id} [watercraft]="watercraft" number={{idx}} ></app-watercrafts-listing>
-    }
+  @for (watercraft of watercrafts; track watercraft._id; let idx = $index) {
+  <app-watercrafts-listing
+    id="{watercraft._id}"
+    [watercraft]="watercraft"
+    number="{{ idx }}"
+  ></app-watercrafts-listing>
+  }
 </section>

@@ -1,0 +1,9 @@
+<label for="name">Name:</label>
+<input
+  type="text"
+  [ngModel]="name"
+  (ngModelChange)="onChange($event)"
+  class="form-control"
+  placeholder="insert our organization name"
+  disabled="{{ disable }}"
+/>

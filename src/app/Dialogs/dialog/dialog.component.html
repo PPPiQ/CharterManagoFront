@@ -1,0 +1,16 @@
+<section class="dialog-container">
+  <header class="dialog-header p-1">
+    <ng-container #headerContainer></ng-container>
+    @if(!header?.tpl) {
+    <span>{{ title }}</span>
+    }
+  </header>
+
+  <main class="dialog-content m-2">
+    <ng-container #contentContainer></ng-container>
+  </main>
+  <footer class="dialog-footer">
+    <button class="btn btn-primary" (click)="close()">Close</button>
+    <ng-container #footerContainer></ng-container>
+  </footer>
+</section>

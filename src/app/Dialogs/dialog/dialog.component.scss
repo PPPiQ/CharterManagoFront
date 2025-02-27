@@ -1,0 +1,26 @@
+.dialog-container {
+  display: flex;
+  flex-direction: column;
+  border: solid 1px green;
+  margin: none;
+  min-width: 25vw;
+  min-height: 21vh;
+}
+
+.dialog-header {
+  font-size: small;
+  background-color: var(--bs-body-color);
+  margin: none;
+  padding: var(1-p);
+  color: white;
+}
+
+.dialog-content {
+  flex-grow: 0.9;
+}
+
+.dialog-footer {
+  display: flex;
+  justify-content: space-around;
+  flex-direction: row;
+}

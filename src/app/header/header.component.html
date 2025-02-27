@@ -1,11 +1,11 @@
 <header class="header">
   <div class="header-content">
-    <h1>{{title}}</h1>
+    <h1>{{ title }}</h1>
     <nav class="top-menu" id="nav">
       <ul class="nav-links">
         @for(item of navLinks; track item.id; let idx = $index) {
         <li id="{{ item.id }}" class="nav-item">
-          <a  [routerLink]="item.href" class="nav-link">
+          <a [routerLink]="item.href" class="nav-link">
             @if (item?.icon.length > 0) {
             <fa-icon [icon]="item?.icon"></fa-icon>
             } @else {
@@ -16,9 +16,26 @@
         }
       </ul>
     </nav>
-    <div class='tools-links'>
-      <app-user-profile></app-user-profile>
-      <img src="assets/icons/shopping_cart.svg" alt="Shopping cart" (click)="openCart()">
+    <div class="tools-links">
+      @if (isAuth()) {
+      <span (click)="logout()">
+        <fa-icon [icon]="['fas', 'right-from-bracket']">Log out</fa-icon> Log
+        Out
+      </span>
+      <span (click)="goToAccount()">
+        <fa-icon [icon]="['fas', 'circle-user']"></fa-icon>
+      </span>
+      } @else {
+      <span class="user-profile-image" (click)="login()">
+        <fa-icon [icon]="['fas', 'right-to-bracket']">Log in</fa-icon> Log In
+      </span>
+      }
+
+      <img
+        src="assets/icons/shopping_cart.svg"
+        alt="Shopping cart"
+        (click)="openCart()"
+      />
     </div>
   </div>
 </header>

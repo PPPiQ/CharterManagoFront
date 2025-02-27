@@ -10,13 +10,21 @@ import {
   IconDefinition,
   faRightFromBracket,
   faRightToBracket,
+  faCircleUser,
 } from '@fortawesome/free-solid-svg-icons';
 import { RouterOutlet } from '@angular/router';
+import { ManagerModule } from './manager/manager.module';
 
 @Component({
   selector: 'app-root',
 
-  imports: [HeaderComponent, FooterComponent, FontAwesomeModule, RouterOutlet],
+  imports: [
+    HeaderComponent,
+    FooterComponent,
+    FontAwesomeModule,
+    RouterOutlet,
+    ManagerModule,
+  ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
 })
@@ -24,8 +32,14 @@ export class AppComponent {
   faHouse: IconDefinition = faHouse;
   faRightFromBracket: IconDefinition = faRightFromBracket;
   faRightToBracket: IconDefinition = faRightToBracket;
+  faCircleUser: IconDefinition = faCircleUser;
 
   constructor(library: FaIconLibrary) {
-    library.addIcons(faHouse, faRightFromBracket, faRightToBracket);
+    library.addIcons(
+      faHouse,
+      faRightFromBracket,
+      faRightToBracket,
+      faCircleUser
+    );
   }
 }

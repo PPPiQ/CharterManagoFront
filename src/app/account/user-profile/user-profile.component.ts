@@ -1,17 +1,11 @@
-import {
-  Component,
-  effect,
-  OnInit,
-  Signal,
-  signal,
-  WritableSignal,
-} from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { CommonModule } from '@angular/common';
-
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient, HttpHeaders, HttpResponse } from '@angular/common/http';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../authentication/auth.service';
+import { AccountData, UserAccount, UserDataResponse } from '../../models/auth';
+import { catchError } from 'rxjs';
 
 @Component({
   selector: 'app-user-profile',
@@ -21,33 +15,17 @@ import { AuthService } from '../../authentication/auth.service';
   styleUrl: './user-profile.component.scss',
 })
 export class UserProfileComponent implements OnInit {
-  public isAuth: Signal<boolean>
+  public accountData: UserAccount = new AccountData({ login: '' });
 
   constructor(
     private authService: AuthService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private http: HttpClient
-  ) { 
-    this.isAuth = this.authService.$isAuthorized;
-  }
+  ) {}
 
   ngOnInit(): void {
-    // this.authService.$isAuthorized.subscribe((result) => {
-    //   console.log("CHange in authorization");
-    //   console.log(result);
-    //   this.isAuth = result;
-    // });
-  }
-
-  login() {
-    this.router.navigate(['/login'], { relativeTo: this.activatedRoute });
-  }
-
-  logout() {
-    this.authService.logout().subscribe((result) => {
-      console.log('Lout out finalized.');
-    });
+    this.getUser();
   }
 
   getUser() {
@@ -60,31 +38,31 @@ export class UserProfileComponent implements OnInit {
         headers,
         withCredentials: true,
       })
-      .subscribe((response) => {
-        console.log('User request finished ');
+      .subscribe({
+        next: (response) => {
+          const dataObject: UserDataResponse = response as UserDataResponse;
+         this.accountData.name = dataObject.user?.name;
+         this.accountData.login = dataObject.user?.email;
+          console.log('User obteined');
+          
+        },
+        error: (err) => {
+          console.log('HTTP Error', err)
+          console.log(err.message);
+          console.log(err?.error?.msg);
+        },
+        complete: () => console.log('HTTP request completed.'),
       });
   }
 
   refresh() {
-    console.log('Get user start.');
-    // return this.http
-    //   .post(
-    //     'http://127.0.0.1:5000/api/v1/refresh', null,
-    //     {
-    //       headers,
-    //       withCredentials: true,
-    //     }
-    //   )
     this.authService.refresh().subscribe((response) => {
       console.log('This is get user response: ');
-      console.log(response);
+
     });
   }
 
-  getUserLoginState() {
-    let authState = this.authService.getAuthState();
-    console.log(authState);
-
-    return authState;
+  getUserData() {
+    return this.accountData;
   }
 }

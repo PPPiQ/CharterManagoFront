@@ -17,6 +17,7 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { AuthInterceptor } from './http-interceptors/auth.interceptor';
 import { provideClientHydration, withHttpTransferCacheOptions } from '@angular/platform-browser';
+import { ManagerModule } from './manager/manager.module';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -26,7 +27,6 @@ export const appConfig: ApplicationConfig = {
     provideHttpClient(withInterceptorsFromDi(), withJsonpSupport(), withFetch()),
     importProvidersFrom(FormsModule, ReactiveFormsModule),
     provideAnimationsAsync(),
-    
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}
   ],
 };

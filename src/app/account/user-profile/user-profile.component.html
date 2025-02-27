@@ -1,14 +1,16 @@
-
-<button (click)="getUser()">Get users</button>
-<button (click)="refresh()">Refresh</button>
+<div class="user-profile">
+  <span>
+    User name
+  </span>
+  <span>
+    {{ accountData.name}}
+  </span>
+</div>
 <div>
-  @if (isAuth()) {
-  <span (click)="logout()">
-    <fa-icon [icon]="['fas', 'right-from-bracket']" >Log out</fa-icon> Log Out 
+  <span>
+    email
   </span>
-  } @else {
-  <span class="user-profile-image" (click)="login()">
-    <fa-icon [icon]="['fas', 'right-to-bracket']" >Log in</fa-icon> Log In
+  <span>
+    {{ accountData.login}}
   </span>
-  }
 </div>
