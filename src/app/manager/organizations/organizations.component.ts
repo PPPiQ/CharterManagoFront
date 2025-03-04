@@ -1,13 +1,10 @@
-import {
-  Component,
-  Signal,
-  ViewChild,
-} from '@angular/core';
+import { Component, Signal, ViewChild } from '@angular/core';
 import { DataService } from '../data.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { OrganizationsI } from '../models/organizations';
 import { faTrashCan, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 import { DialogComponent } from '../../Dialogs/dialog/dialog.component';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Component({
   standalone: false,
@@ -28,7 +25,11 @@ export class OrganizationsComponent {
     ]),
   });
 
-  constructor(private dataService: DataService) {
+  constructor(
+    private dataService: DataService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.organizations = this.dataService.$organizations;
     this.dataService.getOrganizations().subscribe({
       complete() {
@@ -60,6 +61,13 @@ export class OrganizationsComponent {
       complete: () => {
         console.log('Deleting completed.');
       },
+    });
+  }
+
+  editOrganization(org: OrganizationsI) {
+    console.log(`Editing organization: ${org.id}`);
+    this.router.navigate([`edit/${org.id}`, { orgName: org.name }], {
+      relativeTo: this.activatedRoute,
     });
   }
 }

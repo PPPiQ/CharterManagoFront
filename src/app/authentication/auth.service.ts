@@ -25,6 +25,12 @@ export class AuthService implements OnDestroy {
   private _destiantionUrl: string | null = null;
   private authEffect: EffectRef;
   public $isAuthorized: Signal<boolean> = this.isAuthenticated.asReadonly();
+  private options = {
+    headers: new HttpHeaders({
+      'Content-Type': 'application/json',
+    }),
+    withCredentials: true,
+  };
 
   constructor(private http: HttpClient) {
     const token = sessionStorage.getItem('accessToken');
@@ -44,53 +50,28 @@ export class AuthService implements OnDestroy {
   }
 
   refresh(id?: string): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    return this.http
-      .post(
-        '/api/v1/refresh',
-        {},
-        {
-          headers,
-          withCredentials: true,
-        }
-      )
-      .pipe(
-        tap((authPayload) => {
-          console.log('tap on refresh setting session');
-          try {
-            const authData = authPayload as AuthSessionData;
-            if (authData.accessToken) {
-              console.log('setting session');
-              this.setUserSessionState(authData);
-            } else {
-              console.log('Authentication failure');
-            }
-          } catch (error) {
-            console.log('Error on reciving and converting auth session data');
+    return this.http.post('/api/v1/refresh', {}, this.options).pipe(
+      tap((authPayload) => {
+        console.log('tap on refresh setting session');
+        try {
+          const authData = authPayload as AuthSessionData;
+          if (authData.accessToken) {
+            console.log('setting session');
+            this.setUserSessionState(authData);
+          } else {
+            console.log('Authentication failure');
           }
-        })
-      );
+        } catch (error) {
+          console.log('Error on reciving and converting auth session data');
+        }
+      })
+    );
   }
 
   logout(): Observable<any> {
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
-
-    console.log('Loged out start.');
     this.setUserSessionState({ accessToken: null });
     return this.http
-      .post(
-        'http://127.0.0.1:5000/api/v1/logout',
-        {},
-        {
-          headers,
-          withCredentials: true,
-        }
-      )
+      .post('http://127.0.0.1:5000/api/v1/logout', {}, this.options)
       .pipe(tap((response) => {}));
   }
 
@@ -100,14 +81,11 @@ export class AuthService implements OnDestroy {
       password,
     };
 
-    const headers = new HttpHeaders({
-      'Content-Type': 'application/json',
-    });
+    const customOptions = this.options;
+    customOptions.withCredentials = false;
 
     return this.http
-      .post('http://127.0.0.1:5000/api/v1/login', body, {
-        headers,
-      })
+      .post('http://127.0.0.1:5000/api/v1/login', body, customOptions)
       .pipe(
         tap((authPayload: any) => {
           try {
@@ -123,6 +101,13 @@ export class AuthService implements OnDestroy {
           }
         })
       );
+  }
+
+  getUserRights(id: string) {
+    return this.http.get(
+      'http://127.0.0.1:5000/api/v1/user-roles', 
+      this.options
+    );
   }
 
   private setSessionCookie(state: string) {
@@ -161,7 +146,7 @@ export class AuthService implements OnDestroy {
   }
 
   public setAccessTokenCookie(value: string) {
-    sessionStorage.setItem('accessToken', value)
+    sessionStorage.setItem('accessToken', value);
   }
 
   public getAccessTokenCookie() {

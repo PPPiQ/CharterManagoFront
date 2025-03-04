@@ -12,16 +12,21 @@
 
   & .container {
     display: grid;
-    grid-template-columns: [row1-start] 75% [row1-end row2-start] 25% [row2-end];
+    grid-template-columns: [row1-start] 5% [row1-end row2-start] 90% [row2-end row2-start] 5% [row3-end];
     grid-template-rows: auto;
     align-items: center;
     border-top: solid 1px grey;
     &:first-child {
       border-top: none;
     }
+    &:nth-child(odd) {
+      background-color: lightgray;
+    }
     & .col-item {
       align-content: center;
-      height: 3rem;
+      height: 2.5rem;
+
+
     }
   }
 }

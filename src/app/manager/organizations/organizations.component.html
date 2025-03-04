@@ -6,10 +6,18 @@
     </button>
   </div>
   <div class="organizations-section-content">
+    <div class="container">
+      <div class="col-item"><b>#</b></div>
+      <div class="col-item"><b>Name</b></div>
+      <div class="col-item"><b>Del.</b></div>
+    </div>
     @if( organizations().length > 0 ) { @for(organization of organizations();
     track organization.id) {
     <div class="container">
-      <div class="col-item">Name: {{ organization.name }}</div>
+      <div class="col-item">{{ $index + 1 }}</div>
+      <div class="col-item" (click)="editOrganization(organization)">
+        {{ organization.name }}
+      </div>
       <div class="col-item">
         <fa-icon
           [icon]="faTrashCan"

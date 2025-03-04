@@ -1,14 +1,14 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { OrganizationsComponent } from './organizations/organizations.component';
-import { AddOrganizatioComponent } from '../form-elements/add-organization/add-organizatio.component';
+import { OrganizationEditorComponent } from './organization-editor/organization-editor.component';
 
 const routes: Routes = [
   {
     path: '',
     children: [
       { path: '', component: OrganizationsComponent },
-      { path: 'add-organization', component: AddOrganizatioComponent },
+      { path: 'edit/:orgId', component: OrganizationEditorComponent}
     ],
   },
 ];

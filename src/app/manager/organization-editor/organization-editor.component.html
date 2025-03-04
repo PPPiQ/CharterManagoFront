@@ -1,0 +1,12 @@
+<h2>Editor of {{ organization }}</h2>
+
+<div>
+  <p>Admins</p>
+  <ul>
+    @for (userRight of userRights; track $index) {
+    <li>{{ userRight }}</li>
+    }
+  </ul>
+</div>
+
+<button (click)="addEiditor()">Add Editors</button>
