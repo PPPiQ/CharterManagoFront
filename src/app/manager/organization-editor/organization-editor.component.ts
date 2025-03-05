@@ -1,7 +1,9 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, ViewChild } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../authentication/auth.service';
 import { concatMap } from 'rxjs';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { DialogComponent } from '../../Dialogs/dialog/dialog.component';
 
 @Component({
   selector: 'app-organization-editor',
@@ -11,21 +13,32 @@ import { concatMap } from 'rxjs';
 })
 export class OrganizationEditorComponent {
   organization: any = '';
-  userRights: any[] = [];
+  groupRolePermissions: any[] = [];
 
-  constructor(private activatedRoute: ActivatedRoute, private authService: AuthService) {
+  addGroupForm = new FormGroup({
+    groupName: new FormControl({ value: '', disabled: false }, [
+      Validators.required,
+      Validators.minLength(2),
+    ]),
+  });
 
-    activatedRoute.params.pipe(
-      concatMap((params) => {
-        this.organization = params?.['orgName'];
-        return this.authService.getUserRights("67c5cbcd2938d273cfa10a3c");
-      })
-    ).subscribe(()=>{
-      console.log("User rights downloaded.");
-      
-    });
+  constructor(
+    private activatedRoute: ActivatedRoute,
+    private authService: AuthService
+  ) {
+    activatedRoute.params
+      .pipe(
+        concatMap((params) => {
+          this.organization = params?.['orgName'];
+          return this.authService.getUserRights('67c5cbcd2938d273cfa10a3c');
+        })
+      )
+      .subscribe(() => {
+        console.log('User rights downloaded.');
+      });
   }
-  
+
+
 
   addEiditor() {}
 }

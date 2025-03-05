@@ -19,3 +19,11 @@ export interface OrganizationCreateResponse {
 export interface ResponseOnDelete {
   success: boolean,
 }
+
+export interface AuthorizationGroupsI {
+  _id?: string, 
+  id: string, 
+  group_name: string, 
+  created_at?: Date, 
+  __v?: number;
+}

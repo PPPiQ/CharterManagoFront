@@ -1,11 +1,14 @@
 <section>
-  <div class="organizations-header">
-    <span class="organizations-section-title">My organizations</span>
-    <button class="btn btn-primary float-end" (click)="dialog.showModal()">
+  <div class="section-header">
+    <span class="section-title">My organizations</span>
+    <button
+      class="btn btn-primary float-end"
+      (click)="addOrganizationDialog.showModal()"
+    >
       Add organization
     </button>
   </div>
-  <div class="organizations-section-content">
+  <div class="section-content">
     <div class="container">
       <div class="col-item"><b>#</b></div>
       <div class="col-item"><b>Name</b></div>
@@ -31,17 +34,48 @@
     }
   </div>
 </section>
+<section>
+  <div class="section-header">
+    <span class="section-title">Access groups: </span>
+    <button
+      class="btn btn-primary float-end"
+      (click)="addGroupDialog.showModal()"
+    >
+      Add new
+    </button>
+  </div>
+</section>
 
-<dialog class="dialog" appDialog #dialog title="Add organization">
+<dialog
+  class="dialog"
+  appDialog
+  #addOrganizationDialog
+  title="Add organization"
+>
   <form [formGroup]="form">
     <ng-template appDialogContent>
-      <app-add-organization formControlName="organizationName">
+      <app-add-organization
+        formControlName="organizationName"
+        placeholder="Type organization name"
+      >
       </app-add-organization>
     </ng-template>
     <ng-template appDialogFooter>
       <button class="btn btn-secondary" (click)="saveOrganization()">
         Save
       </button>
+    </ng-template>
+  </form>
+</dialog>
+
+<dialog class="dialog" appDialog #addGroupDialog title="Add group">
+  <form [formGroup]="addGroupForm">
+    <ng-template appDialogContent>
+      <app-add-group formControlName="groupName" placeholder="Add group">
+      </app-add-group>
+    </ng-template>
+    <ng-template appDialogFooter>
+      <button class="btn btn-secondary" (click)="addNewGroup()">Save</button>
     </ng-template>
   </form>
 </dialog>

@@ -13,9 +13,14 @@ import { AddOrganizatioComponent } from '../form-elements/add-organization/add-o
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { OfferEditorComponent } from './offer-editor/offer-editor.component';
 import { OrganizationEditorComponent } from './organization-editor/organization-editor.component';
+import { AddGrupComponent } from '../form-elements/add-group/add-group.component';
 
 @NgModule({
-  declarations: [OrganizationsComponent, OfferEditorComponent, OrganizationEditorComponent],
+  declarations: [
+    OrganizationsComponent,
+    OfferEditorComponent,
+    OrganizationEditorComponent,
+  ],
   imports: [
     CommonModule,
     ManagerRoutingModule,
@@ -25,7 +30,8 @@ import { OrganizationEditorComponent } from './organization-editor/organization-
     DialogHeaderDirective,
     DialogContentDirective,
     AddOrganizatioComponent,
-    FontAwesomeModule
+    AddGrupComponent,
+    FontAwesomeModule,
   ],
   providers: [DataService],
 })

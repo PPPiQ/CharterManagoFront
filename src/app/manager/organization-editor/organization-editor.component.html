@@ -1,12 +1,14 @@
 <h2>Editor of {{ organization }}</h2>
 
 <div>
-  <p>Admins</p>
+  <div>
+    <span>Access groups: </span>
+
+
+  </div>
   <ul>
-    @for (userRight of userRights; track $index) {
-    <li>{{ userRight }}</li>
+    @for (groupRole of groupRolePermissions; track $index) {
+    <li>{{ groupRole }}</li>
     }
   </ul>
 </div>
-
-<button (click)="addEiditor()">Add Editors</button>

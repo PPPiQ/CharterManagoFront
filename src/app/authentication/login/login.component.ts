@@ -27,7 +27,7 @@ import { ActivatedRoute, Router } from '@angular/router';
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss',
 })
-export class LoginComponent implements ControlValueAccessor {
+export class LoginComponent {
   loginForm: FormGroup;
   emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
 
@@ -35,7 +35,12 @@ export class LoginComponent implements ControlValueAccessor {
     return this.loginForm.get('login');
   }
 
-  constructor(private fb: FormBuilder, private authService: AuthService, private route: Router, private activatedRoute: ActivatedRoute) {
+  constructor(
+    private fb: FormBuilder,
+    private authService: AuthService,
+    private router: Router,
+    private activatedRoute: ActivatedRoute
+  ) {
     this.loginForm = this.fb.group({
       login: new FormControl('', {
         updateOn: 'blur',
@@ -52,42 +57,16 @@ export class LoginComponent implements ControlValueAccessor {
     });
   }
 
-  writeValue(obj: any): void {
-    if (obj) {
-      this.loginForm.setValue(obj, { emitEvent: false });
-    }
-  }
-  registerOnChange(fn: any): void {
-    console.log('Changed');
-
-    // this.onChange = fn;
-  }
-  registerOnTouched(fn: any): void {
-    // this.onTouched = fn;
-  }
-  setDisabledState?(isDisabled: boolean): void {
-    if (isDisabled) {
-      this.loginForm.disable();
-    } else {
-      this.loginForm.enable();
-    }
-  }
-
   public login(): void {
-
     this.authService
       .login(this.loginForm.value.login, this.loginForm.value.password)
       .subscribe((result) => {
         let destination: string = this.authService.getDestiantionUrl() || '/';
-        this.route.navigate([destination], { relativeTo: this.activatedRoute}) 
+        this.router.navigate([destination], { relativeTo: this.activatedRoute });
       });
   }
 
-  public onCredentialsChange(): void {
-    // this.onChange()
-  }
-
-  public onBlur(): void {
-    // this.onTouched();
+  public register(): void {
+    this.router.navigate(['/register']);
   }
 }

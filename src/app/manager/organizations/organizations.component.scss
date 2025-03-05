@@ -1,13 +1,13 @@
-.organizations-header {
+.section-header {
   margin: 1em;
 
-  .organizations-section-title {
+  .section-title {
     font-weight: bold;
     font-size: large;
   }
 }
 
-.organizations-section-content {
+.section-content {
   border: solid 1px grey;
 
   & .container {
@@ -31,8 +31,4 @@
   }
 }
 
-.dialog {
-  border: solid 1px black;
-  border-radius: 5%;
-  padding: 0px;
-}
+

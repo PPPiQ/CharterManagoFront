@@ -23,8 +23,9 @@ section {
     }
 
     div {
-      &.loginButton {
-        align-self: flex-end;
+      &.buttons {
+        flex-direction: row;
+        justify-content: space-between;
       }
     }
   }

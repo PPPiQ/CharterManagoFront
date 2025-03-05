@@ -7,20 +7,20 @@ import {
 } from '@angular/forms';
 
 @Component({
-  selector: 'app-add-organization',
-  templateUrl: './add-organizatio.component.html',
-  styleUrl: './add-organizatio.component.scss',
+  selector: 'app-add-group',
+  templateUrl: './add-group.component.html',
+  styleUrl: './add-group.component.scss',
   standalone: true,
   imports: [CommonModule, FormsModule],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
-      useExisting: forwardRef(() => AddOrganizatioComponent),
+      useExisting: forwardRef(() => AddGrupComponent),
       multi: true,
     },
   ],
 })
-export class AddOrganizatioComponent implements ControlValueAccessor {
+export class AddGrupComponent implements ControlValueAccessor {
   private _name: string = '';
   disable: boolean | undefined = false;
   @Input({ required: true }) placeholder: string = 'insert name';

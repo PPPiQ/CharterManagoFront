@@ -105,10 +105,11 @@ export class AuthService implements OnDestroy {
 
   getUserRights(id: string) {
     return this.http.get(
-      'http://127.0.0.1:5000/api/v1/user-roles', 
+      'http://127.0.0.1:5000/api/v1/user-roles',
       this.options
     );
   }
+
 
   private setSessionCookie(state: string) {
     sessionStorage.setItem('accessToken', state);
@@ -125,6 +126,7 @@ export class AuthService implements OnDestroy {
       this.isAuthenticated.set(false);
     }
   }
+  
 
   public getDestiantionUrl(): string | null {
     return this._destiantionUrl;

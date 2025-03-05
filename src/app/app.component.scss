@@ -31,3 +31,9 @@ input {
     flex-grow: 1;
     flex-shrink: 0;
 }
+
+.dialog {
+  border: solid 1px black;
+  border-radius: 5%;
+  padding: 0px;
+}

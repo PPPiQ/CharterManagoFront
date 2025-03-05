@@ -23,13 +23,22 @@
         />
       </div>
 
-      <div class="loginButton">
+      <div class="buttons">
+        <button
+          type="button"
+          value="Register"
+          id="registerButton"
+          (click)="register()"
+          class="btn btn-secondary btn-lg float-start"
+        >
+          Register
+        </button>
         <button
           type="submit"
           value="Submit"
           id="loginButton"
           (click)="login()"
-          class="btn btn-primary btn-lg"
+          class="btn btn-primary btn-lg float-end"
           [disabled]="loginForm.invalid"
         >
           Login
