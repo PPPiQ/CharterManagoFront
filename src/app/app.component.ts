@@ -35,7 +35,6 @@ export class AppComponent {
   faRightToBracket: IconDefinition = faRightToBracket;
   faCircleUser: IconDefinition = faCircleUser;
 
-
   constructor(library: FaIconLibrary) {
     library.addIcons(
       faHouse,

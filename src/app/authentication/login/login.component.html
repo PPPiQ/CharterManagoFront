@@ -46,7 +46,7 @@
       </div>
       @if (loginFieldValue?.invalid && (loginFieldValue?.dirty &&
       loginFieldValue?.touched)) {
-      <div class="cross-validation-error-message alert alert-danger">
+      <div class="alert alert-danger">
         <span> Please verify form values </span>
         @if(loginFieldValue?.hasError('required')) {
         <span>Login is required</span>

@@ -1,5 +1,6 @@
 @use "bootstrap/scss/bootstrap";
 
+
 section {
   min-width: fit-content;
   position: relative;
@@ -29,17 +30,4 @@ section {
       }
     }
   }
-}
-
-.ng-valid[required],
-.ng-valid.required {
-  border: 5px solid #42a948; /* green */
-}
-
-.ng-valid-pattern {
-  color: red;
-}
-
-.ng-dirty.ng-invalid {
-  border: 5px solid #a94442; /* red */
 }

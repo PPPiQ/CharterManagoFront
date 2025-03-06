@@ -1,19 +1,16 @@
 import { Component, forwardRef } from '@angular/core';
 import {
-  AbstractControl,
-  ControlValueAccessor,
   FormBuilder,
   FormControl,
   FormGroup,
   FormsModule,
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
-  ValidationErrors,
   Validators,
 } from '@angular/forms';
 import { AuthService } from '../auth.service';
-import { NgFor } from '@angular/common';
 import { ActivatedRoute, Router } from '@angular/router';
+import { EMAIL_PATTERN } from '../../constants';
 
 @Component({
   selector: 'app-login',
@@ -29,7 +26,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 })
 export class LoginComponent {
   loginForm: FormGroup;
-  emailPattern = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+
 
   get loginFieldValue() {
     return this.loginForm.get('login');
@@ -47,7 +44,7 @@ export class LoginComponent {
         validators: [
           Validators.required,
           Validators.minLength(4),
-          Validators.pattern(this.emailPattern),
+          Validators.pattern(EMAIL_PATTERN),
         ],
       }),
       password: new FormControl('', {

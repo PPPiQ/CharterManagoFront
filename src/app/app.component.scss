@@ -37,3 +37,17 @@ input {
   border-radius: 5%;
   padding: 0px;
 }
+
+
+.ng-valid[required],
+.ng-valid.required {
+  border: 5px solid #42a948; /* green */
+}
+
+.ng-valid-pattern {
+  color: red;
+}
+
+.ng-dirty.ng-invalid {
+  border: 5px solid #a94442; /* red */
+}
