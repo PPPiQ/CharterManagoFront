@@ -39,7 +39,7 @@ export class LoginComponent {
     private activatedRoute: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
-      login: new FormControl('', {
+      email: new FormControl('', {
         updateOn: 'blur',
         validators: [
           Validators.required,
@@ -56,7 +56,7 @@ export class LoginComponent {
 
   public login(): void {
     this.authService
-      .login(this.loginForm.value.login, this.loginForm.value.password)
+      .login(this.loginForm.value.email, this.loginForm.value.password)
       .subscribe((result) => {
         let destination: string = this.authService.getDestiantionUrl() || '/';
         this.router.navigate([destination], { relativeTo: this.activatedRoute });

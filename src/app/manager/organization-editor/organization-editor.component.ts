@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { AuthService } from '../../authentication/auth.service';
 import { concatMap } from 'rxjs';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { DialogComponent } from '../../Dialogs/dialog/dialog.component';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 
 @Component({
   selector: 'app-organization-editor',

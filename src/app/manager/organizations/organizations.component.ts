@@ -3,7 +3,7 @@ import { DataService } from '../data.service';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthorizationGroupsI, OrganizationsI } from '../models/organizations';
 import { faTrashCan, IconDefinition } from '@fortawesome/free-solid-svg-icons';
-import { DialogComponent } from '../../Dialogs/dialog/dialog.component';
+import { DialogComponent } from '../../dialogs/dialog/dialog.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { AuthService } from '../../authentication/auth.service';
 import { Observable } from 'rxjs';

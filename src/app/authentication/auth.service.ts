@@ -13,8 +13,9 @@ import {
   AuthSessionData,
   UserAccount,
   UserCredentials,
+  UserDataDetails,
 } from '../models/auth';
-import { Observable, tap } from 'rxjs';
+import { catchError, Observable, tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -51,6 +52,7 @@ export class AuthService implements OnDestroy {
 
   refresh(id?: string): Observable<any> {
     return this.http.post('/api/v1/refresh', {}, this.options).pipe(
+      catchError(this.handleError),
       tap((authPayload) => {
         console.log('tap on refresh setting session');
         try {
@@ -72,7 +74,17 @@ export class AuthService implements OnDestroy {
     this.setUserSessionState({ accessToken: null });
     return this.http
       .post('http://127.0.0.1:5000/api/v1/logout', {}, this.options)
-      .pipe(tap((response) => {}));
+      .pipe(catchError(this.handleError));
+  }
+
+  register(data: UserDataDetails): Observable<any> {
+    console.log('Starting request');
+    const customOptions = this.options;
+    customOptions.withCredentials = false;
+    
+    return this.http
+      .post('http://127.0.0.1:5000/api/v1/register', { ...data }, customOptions)
+      .pipe(catchError(this.handleError));
   }
 
   login(email: string, password: string): Observable<any> {
@@ -87,6 +99,7 @@ export class AuthService implements OnDestroy {
     return this.http
       .post('http://127.0.0.1:5000/api/v1/login', body, customOptions)
       .pipe(
+        catchError(this.handleError),
         tap((authPayload: any) => {
           try {
             const authData = authPayload as AuthSessionData;
@@ -110,7 +123,6 @@ export class AuthService implements OnDestroy {
     );
   }
 
-
   private setSessionCookie(state: string) {
     sessionStorage.setItem('accessToken', state);
   }
@@ -126,7 +138,6 @@ export class AuthService implements OnDestroy {
       this.isAuthenticated.set(false);
     }
   }
-  
 
   public getDestiantionUrl(): string | null {
     return this._destiantionUrl;
@@ -153,5 +164,10 @@ export class AuthService implements OnDestroy {
 
   public getAccessTokenCookie() {
     return sessionStorage.getItem('accessToken');
+  }
+
+  private handleError(error: any): Observable<never> {
+    console.error('An error occurred:', error);
+    throw error;
   }
 }

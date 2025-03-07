@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
 import {
   AbstractControl,
   FormBuilder,
@@ -9,6 +9,9 @@ import {
   Validators,
 } from '@angular/forms';
 import { EMAIL_PATTERN } from '../../constants';
+import { AuthService } from '../auth.service';
+import { UserDataDetails } from '../../models/auth';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-registration',
@@ -16,7 +19,11 @@ import { EMAIL_PATTERN } from '../../constants';
   templateUrl: './registration.component.html',
   styleUrl: './registration.component.scss',
 })
-export class RegistrationComponent {
+export class RegistrationComponent implements OnDestroy {
+  registrationSubRef: Subscription | undefined;
+  constructor(private authService: AuthService) {}
+
+
   registrationForm: FormGroup = new FormGroup(
     {
       firstName: new FormControl('', {
@@ -40,11 +47,9 @@ export class RegistrationComponent {
         validators: [Validators.required, Validators.pattern(EMAIL_PATTERN)],
       }),
       password: new FormControl('', {
-        updateOn: 'blur',
         validators: [Validators.required, Validators.minLength(15)],
       }),
       confirmPassword: new FormControl('', {
-        updateOn: 'blur',
         validators: [Validators.required, Validators.minLength(15)],
       }),
     },
@@ -57,20 +62,29 @@ export class RegistrationComponent {
     return control?.hasError(error) && (control.dirty || control.touched);
   }
 
-  constructor(private fb: FormBuilder) {
-    this.registrationForm.valueChanges.subscribe({
-      next: (result) => {
-        console.log(this.registrationForm.errors);
-        console.log(result);
-      },
-    });
-  }
-
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password');
     const confirmPassword = control.get('confirmPassword');
-    return password && confirmPassword && password === confirmPassword
+    return password &&
+      confirmPassword &&
+      password.value === confirmPassword.value
       ? null
       : { mismatch: true };
+  }
+
+  register() {
+    const formValues: UserDataDetails | undefined = this.registrationForm.getRawValue();
+    if (this.registrationForm.valid && formValues) {
+      this.registrationSubRef = this.authService.register(formValues).subscribe({
+        next: (result) => {
+          console.log('Finished registering');
+          console.log(result);
+        },
+      });
+    }
+  }
+
+  ngOnDestroy(): void {
+    this.registrationSubRef && this.registrationSubRef.unsubscribe();
   }
 }

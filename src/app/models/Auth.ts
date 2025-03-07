@@ -4,9 +4,9 @@ export interface UserCredentials {
 }
 
 export interface UserAccount {
-  login: string;
-  name?: string | undefined;
-  surname?:string | undefined;
+  email: string;
+  firstName?: string | undefined;
+  lastName?:string | undefined;
   nick?:string | undefined;
   phone?:number | undefined;
 }
@@ -25,18 +25,18 @@ export interface UserDataDetails {
   _id: string,
   created_at: string, 
   email: string, 
-  name: string,
+  firstName: string,
+  lastName: string, 
   roles: []
 }
 
 export class AccountData implements UserAccount {
-  login: string | "";
-  name: string | undefined;
-  surname: string | undefined;
-  nick: string | undefined;
+  email: string | "";
+  firstName: string | undefined;
+  lastName: string | undefined;
   phone: number | undefined;
   constructor(data: UserAccount) {
-    this.login = data.login;
+    this.email = data.email;
   }
 }
 

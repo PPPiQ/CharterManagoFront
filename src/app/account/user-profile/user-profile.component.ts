@@ -15,7 +15,7 @@ import { catchError } from 'rxjs';
   styleUrl: './user-profile.component.scss',
 })
 export class UserProfileComponent implements OnInit {
-  public accountData: UserAccount = new AccountData({ login: '' });
+  public accountData: UserAccount = new AccountData({ email: '' });
 
   constructor(
     private authService: AuthService,
@@ -41,8 +41,8 @@ export class UserProfileComponent implements OnInit {
       .subscribe({
         next: (response) => {
           const dataObject: UserDataResponse = response as UserDataResponse;
-         this.accountData.name = dataObject.user?.name;
-         this.accountData.login = dataObject.user?.email;
+         this.accountData.firstName = dataObject.user?.firstName;
+         this.accountData.email = dataObject.user?.email;
           console.log('User obteined');
           
         },

@@ -77,18 +77,16 @@
       type="submit"
       class="btn btn-primary m-2 btn-lg"
       [disabled]="registrationForm.invalid"
+      (click)="register()"
     >
       Register
     </button>
   </div>
 </form>
-<div class="validation-messages">
-  @if (registrationForm?.invalid && (registrationForm?.dirty &&
-  registrationForm?.touched)) {
+
+  @if (registrationForm?.invalid && registrationForm?.hasError("mismatch")) {
   <div class="alert alert-danger">
-    @if(registrationForm?.hasError("mismatch")){
-    <span>Passwords do not match.</span><br />
-    }
+    <span>Passwords do not match.</span>
   </div>
   }
-</div>
+
